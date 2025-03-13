@@ -12,6 +12,11 @@ interface Space {
   type: 'your' | 'suggested';
 }
 
+interface SidebarProps {
+  selectedSpace: number;
+  onSpaceSelect: (spaceId: number) => void;
+}
+
 const spaces: Space[] = [
   { id: 1, name: 'Design Inspiration', participants: 24, icon: '🎨', type: 'your' },
   { id: 2, name: 'Midnight Talks', participants: 15, icon: '🌙', type: 'your' },
@@ -23,8 +28,7 @@ const spaces: Space[] = [
   { id: 8, name: 'Eco Warriors', participants: 89, icon: '🌍', type: 'suggested' },
 ];
 
-export default function Sidebar() {
-  const [selectedSpace, setSelectedSpace] = useState<number | null>(4); // Chill Zone selected by default
+export default function Sidebar({ selectedSpace, onSpaceSelect }: SidebarProps) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredSpaces = spaces.filter(space =>
@@ -72,7 +76,7 @@ export default function Sidebar() {
                 key={space.id}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => setSelectedSpace(space.id)}
+                onClick={() => onSpaceSelect(space.id)}
                 className={`w-full px-4 py-3 rounded-xl flex items-center gap-3 transition-all duration-200 ${
                   selectedSpace === space.id
                     ? 'bg-white dark:bg-gray-800 shadow-lg'
@@ -98,7 +102,7 @@ export default function Sidebar() {
                 key={space.id}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => setSelectedSpace(space.id)}
+                onClick={() => onSpaceSelect(space.id)}
                 className={`w-full px-4 py-3 rounded-xl flex items-center gap-3 transition-all duration-200 ${
                   selectedSpace === space.id
                     ? 'bg-white dark:bg-gray-800 shadow-lg'

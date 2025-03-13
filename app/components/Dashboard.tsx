@@ -6,10 +6,21 @@ import { BiSun, BiMoon } from 'react-icons/bi';
 import { useTheme } from '../context/ThemeContext';
 import Sidebar from './Sidebar';
 import ChatRoom from './ChatRoom';
+import MusicLounge from './MusicLounge';
 
 export default function Dashboard() {
   const { theme, toggleTheme } = useTheme();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [selectedSpace, setSelectedSpace] = useState(4); // Default to Chill Zone
+
+  const renderContent = () => {
+    switch (selectedSpace) {
+      case 5: // Music Lounge
+        return <MusicLounge />;
+      default:
+        return <ChatRoom />;
+    }
+  };
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-indigo-50 to-rose-50 dark:from-gray-900 dark:to-gray-800 p-4">
@@ -21,17 +32,17 @@ export default function Dashboard() {
           transition={{ type: 'spring', damping: 20 }}
           className="w-80 flex-shrink-0"
         >
-          <Sidebar />
+          <Sidebar selectedSpace={selectedSpace} onSpaceSelect={setSelectedSpace} />
         </motion.div>
 
-        {/* Chat Room */}
+        {/* Content Area */}
         <motion.div
           initial={{ x: 300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ type: 'spring', damping: 20 }}
           className="flex-1"
         >
-          <ChatRoom />
+          {renderContent()}
         </motion.div>
 
         {/* Theme Toggle */}
