@@ -70,4 +70,3 @@ MIT
 
 ---
 
-Built with ❤️ by [Your Name]
